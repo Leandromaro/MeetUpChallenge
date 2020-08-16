@@ -6,10 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.Date;
 import java.util.Set;
-
 
 @Entity
 @Builder
@@ -26,7 +30,7 @@ public class MeetUp {
 	@JsonIgnore
 	private Set<MeetUpUsers> meetUpUser;
 
-	private LocalDate meetUpdate;
+	private Date meetUpdate;
 
 	private String address;
 

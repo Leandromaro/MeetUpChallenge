@@ -1,6 +1,8 @@
 package com.leandromaro.santander.rest.service;
 
+import com.leandromaro.santander.rest.client.domain.response.List;
 import com.leandromaro.santander.rest.client.domain.response.WeatherResponse;
+import com.leandromaro.santander.rest.domain.response.MeetUpBeerQuantityResponse;
 import com.leandromaro.santander.rest.exceptions.MeetUpNotFoundException;
 import com.leandromaro.santander.rest.persistence.domain.MeetUp;
 import com.leandromaro.santander.rest.persistence.respository.MeetUpRepository;
@@ -21,11 +23,11 @@ public class WeatherService {
 
     private static final String units = "units=metric";
 
-    private static final String cnt = "cnt=16";
+    private static final String cnt = "cnt=1";
 
     private static final String HOST = "community-open-weather-map.p.rapidapi.com";
 
-    private static final String KEY = "092c123636msh32777ac17332e7dp10f955jsn6a262fd6540b";
+    private static final String KEY = "hw5LL92VcdmshXW5REMeQyiBrO8np1hfjKUjsnYwH0r6ddFEcp";
     public static final String AND = "&";
     public static final String QUERY = "?q=";
 
@@ -47,6 +49,15 @@ public class WeatherService {
     }
 
     public WeatherResponse getWeather(Long meetUpId) {
+        return getWeatherResponse(meetUpId);
+    }
+ /*
+    public MeetUpBeerQuantityResponse getBeerQuantity (Long meetUpId) {
+        WeatherResponse weatherResponse = getWeatherResponse(meetUpId);
+
+    }
+ */
+    private WeatherResponse getWeatherResponse(Long meetUpId) {
         MeetUp meetUp = getMeetUp(meetUpId);
         String city = meetUp.getCity();
         HttpEntity<String> request = new HttpEntity<>("", getHeaders());
@@ -54,6 +65,7 @@ public class WeatherService {
         ResponseEntity<WeatherResponse> result = restTemplate.exchange(URI.create(url), HttpMethod.GET, request, WeatherResponse.class);
         return result.getBody();
     }
+
 
     private MeetUp getMeetUp(long meetUpId) {
         Optional<MeetUp> meetUp = meetUpRepository.findById(meetUpId);
@@ -73,5 +85,21 @@ public class WeatherService {
                 .append(AND)
                 .append(cnt).toString();
         return params;
+    }
+
+    private Double getTemperatureOfMeetUp(MeetUp meetUp,  WeatherResponse weatherResponse){
+        /*
+        Double temp = null;
+
+        weatherResponse.get
+        for(List list: weatherResponse.getList()) {
+            if(meetUp.getMeetUpDate().compareTo(list.getDate())== 0) {
+                temp = (double) weatherDay.getTemp().getMax();
+            }
+        }
+        return temp;
+
+        */
+        return null;
     }
 }

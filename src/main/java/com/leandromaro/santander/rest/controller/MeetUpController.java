@@ -2,11 +2,13 @@ package com.leandromaro.santander.rest.controller;
 
 import com.leandromaro.santander.rest.client.domain.response.WeatherResponse;
 import com.leandromaro.santander.rest.domain.request.MeetUpRequest;
+import com.leandromaro.santander.rest.domain.response.MeetUpBeerQuantityResponse;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.service.MeetUpService;
 import com.leandromaro.santander.rest.service.WeatherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -47,7 +49,7 @@ public class MeetUpController {
     }
 
     @PostMapping
-    public ResponseEntity<MeetUpResponse> createMeetUp(@Valid @RequestBody MeetUpRequest meetUpRequest) {
+    public ResponseEntity<MeetUpResponse> createMeetUp(@RequestBody MeetUpRequest meetUpRequest) {
         MeetUpResponse meetUp = meetUpService.createMeetUp(meetUpRequest);
         if(isNull(meetUp)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -77,7 +79,15 @@ public class MeetUpController {
         WeatherResponse weather = weatherService.getWeather(meetUpId);
         return new ResponseEntity<>(weather, HttpStatus.OK);
     }
+/*
+    @GetMapping("/{meetUpId}/beerQuantity")
+    public ResponseEntity<MeetUpBeerQuantityResponse> getMeetUpBeerQuantity(
+            @PathVariable long meetUpId){
+        MeetUpBeerQuantityResponse beerQuantity = weatherService.getBeerQuantity(meetUpId);
+        return new ResponseEntity<>(beerQuantity, HttpStatus.OK);
+    }
 
+ */
     @GetMapping
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();
