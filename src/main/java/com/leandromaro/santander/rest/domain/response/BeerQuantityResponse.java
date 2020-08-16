@@ -5,8 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class MeetUpBeerQuantityResponse {
+@NoArgsConstructor
+public class BeerQuantityResponse {
+
     Integer beerQuantity;
+
+    Integer beerBoxesQuantity;
+
+    String celsiusWeather;
 }

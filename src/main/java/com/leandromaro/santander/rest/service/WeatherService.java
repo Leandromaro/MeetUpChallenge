@@ -2,18 +2,22 @@ package com.leandromaro.santander.rest.service;
 
 import com.leandromaro.santander.rest.client.domain.response.WeatherResponse;
 import com.leandromaro.santander.rest.client.domain.response.darkSky.DarkSkyResponse;
+import com.leandromaro.santander.rest.domain.response.BeerQuantityResponse;
 import com.leandromaro.santander.rest.exceptions.MeetUpNotFoundException;
 import com.leandromaro.santander.rest.helper.UrlHelper;
 import com.leandromaro.santander.rest.persistence.domain.MeetUp;
+import com.leandromaro.santander.rest.persistence.domain.MeetUpUsers;
 import com.leandromaro.santander.rest.persistence.respository.MeetUpRepository;
-import lombok.SneakyThrows;
+import com.leandromaro.santander.rest.persistence.respository.MeetUpUsersRepository;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class WeatherService {
@@ -27,13 +31,19 @@ public class WeatherService {
 
     private final MeetUpRepository meetUpRepository;
 
-    public WeatherService(RestTemplateBuilder builder, MeetUpRepository meetUpRepository) {
+    private final MeetUpUsersRepository meetUpUsersRepository;
+
+    public WeatherService(RestTemplateBuilder builder,
+                          MeetUpRepository meetUpRepository,
+                          MeetUpUsersRepository meetUpUsersRepository) {
         this.restTemplate = builder.build();
         this.meetUpRepository = meetUpRepository;
+        this.meetUpUsersRepository = meetUpUsersRepository;
     }
 
     public DarkSkyResponse getWeather(Long meetUpId) {
         MeetUp meetUp = getMeetUp(meetUpId);
+
         ResponseEntity<WeatherResponse> meetUpCity = getMeetUpCity(meetUp);
 
         String meetUpDateString = getMeetUpDateString(meetUp);
@@ -63,25 +73,51 @@ public class WeatherService {
     }
 
 
+    public BeerQuantityResponse getMeetUpBeerQuantity(long meetUpId){
+        DarkSkyResponse weather = this.getWeather(meetUpId);
+        double fahrenheitTemperature = weather.getCurrently().getTemperature();
+        double celsiusTemperature = (fahrenheitTemperature-32)*(0.5556);
+
+        int enrolledMeetUpUsersQuantity = getEnrolledMeetUpUsersQuantity(meetUpId);
+
+        double beerPerPerson = getNumberOfBeerPerPerson(celsiusTemperature);
+        double amountOfBeer = Math.ceil(beerPerPerson * enrolledMeetUpUsersQuantity);
+        double amountOfBeerBoxes = getAmountOfBeerBoxes(amountOfBeer);
+
+        return new BeerQuantityResponse((int) amountOfBeer, (int) amountOfBeerBoxes,Double.toString(celsiusTemperature));
+    }
+
+    private double getAmountOfBeerBoxes(double amountOfBeer) {
+        if (amountOfBeer > 6){
+            amountOfBeer =  amountOfBeer / 6;
+            return Math.ceil(amountOfBeer);
+        }
+        return 1;
+    }
+
+    private double getNumberOfBeerPerPerson(double celsiusTemperature){
+        if(celsiusTemperature < 20){
+            return 0.75;
+        }else if(celsiusTemperature <=24) {
+            return 1;
+        }
+        return 3;
+    }
+
+    private int getEnrolledMeetUpUsersQuantity(long meetUpId) {
+        List<MeetUpUsers> enrolledMeetUpUsers = meetUpUsersRepository
+                .findAll()
+                .stream()
+                .filter(meetUpUsers -> meetUpUsers.getMeetUp().getId() == meetUpId)
+                .collect(Collectors.toList());
+        if (enrolledMeetUpUsers.isEmpty()){
+            throw new MeetUpNotFoundException("Not Enrolled Users to the given meetUp");
+        }
+        return enrolledMeetUpUsers.size();
+    }
+
     private MeetUp getMeetUp(long meetUpId) {
         Optional<MeetUp> meetUp = meetUpRepository.findById(meetUpId);
         return meetUp.orElseThrow(() -> new MeetUpNotFoundException("Meet Up not found"));
-    }
-
-
-    private Double getTemperatureOfMeetUp(MeetUp meetUp,  WeatherResponse weatherResponse){
-        /*
-        Double temp = null;
-
-        weatherResponse.get
-        for(List list: weatherResponse.getList()) {
-            if(meetUp.getMeetUpDate().compareTo(list.getDate())== 0) {
-                temp = (double) weatherDay.getTemp().getMax();
-            }
-        }
-        return temp;
-
-        */
-        return null;
     }
 }

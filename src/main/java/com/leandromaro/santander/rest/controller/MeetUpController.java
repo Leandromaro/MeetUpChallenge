@@ -1,15 +1,13 @@
 package com.leandromaro.santander.rest.controller;
 
-import com.leandromaro.santander.rest.client.domain.response.WeatherResponse;
 import com.leandromaro.santander.rest.client.domain.response.darkSky.DarkSkyResponse;
 import com.leandromaro.santander.rest.domain.request.MeetUpRequest;
-import com.leandromaro.santander.rest.domain.response.MeetUpBeerQuantityResponse;
+import com.leandromaro.santander.rest.domain.response.BeerQuantityResponse;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.service.MeetUpService;
 import com.leandromaro.santander.rest.service.WeatherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.Objects.isNull;
@@ -80,15 +77,15 @@ public class MeetUpController {
         DarkSkyResponse darkSkyResponse = weatherService.getWeather(meetUpId);
         return new ResponseEntity<>(darkSkyResponse, HttpStatus.OK);
     }
-/*
+
     @GetMapping("/{meetUpId}/beerQuantity")
-    public ResponseEntity<MeetUpBeerQuantityResponse> getMeetUpBeerQuantity(
+    public ResponseEntity<BeerQuantityResponse> getMeetUpBeerQuantity(
             @PathVariable long meetUpId){
-        MeetUpBeerQuantityResponse beerQuantity = weatherService.getBeerQuantity(meetUpId);
+        BeerQuantityResponse beerQuantity = weatherService.getMeetUpBeerQuantity(meetUpId);
         return new ResponseEntity<>(beerQuantity, HttpStatus.OK);
     }
 
- */
+
     @GetMapping
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();
