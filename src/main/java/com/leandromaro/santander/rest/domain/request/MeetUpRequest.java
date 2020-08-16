@@ -23,4 +23,6 @@ public class MeetUpRequest {
     private LocalDate date;
 
     private String address;
+
+    private String city;
 }

@@ -1,8 +1,10 @@
 package com.leandromaro.santander.rest.controller;
 
+import com.leandromaro.santander.rest.client.domain.response.WeatherResponse;
 import com.leandromaro.santander.rest.domain.request.MeetUpRequest;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.service.MeetUpService;
+import com.leandromaro.santander.rest.service.WeatherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,13 +27,12 @@ import static java.util.Objects.isNull;
 public class MeetUpController {
 
     private final MeetUpService meetUpService;
+    private final WeatherService weatherService;
 
-
-    MeetUpController(MeetUpService meetUpService) {
+    MeetUpController(MeetUpService meetUpService, WeatherService weatherService) {
         this.meetUpService = meetUpService;
-
+        this.weatherService = weatherService;
     }
-
 
     //@PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
@@ -70,6 +71,13 @@ public class MeetUpController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/{meetUpId}/weather")
+    public ResponseEntity<WeatherResponse> getMeetUpWeather(
+            @PathVariable long meetUpId){
+        WeatherResponse weather = weatherService.getWeather(meetUpId);
+        return new ResponseEntity<>(weather, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();
@@ -78,4 +86,5 @@ public class MeetUpController {
         }
         return new ResponseEntity<>(meetUpResponses, HttpStatus.OK);
     }
+
 }

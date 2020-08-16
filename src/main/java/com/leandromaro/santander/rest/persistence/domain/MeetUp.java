@@ -31,4 +31,6 @@ public class MeetUp {
 	private String address;
 
 	private String name;
+
+	private String city;
 }

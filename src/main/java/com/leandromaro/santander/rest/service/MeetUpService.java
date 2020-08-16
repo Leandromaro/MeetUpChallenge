@@ -28,6 +28,7 @@ public class MeetUpService {
 
     private final MeetUpUsersRepository meetUpUsersRepository;
 
+
     MeetUpService(MeetUpRepository meetUpRepository,
                   UserMeetUpRepository userMeetUpRepository,
                   MeetUpUsersRepository meetUpUsersRepository) {
@@ -41,10 +42,11 @@ public class MeetUpService {
                 .address(meetUpRequest.getAddress())
                 .meetUpdate(meetUpRequest.getDate())
                 .name(meetUpRequest.getName())
+                .city(meetUpRequest.getCity())
                 .build();
 
         MeetUp meetUp = meetUpRepository.save(meet);
-        return new MeetUpResponse(meetUp.getId(), meetUp.getName(),meetUp.getAddress());
+        return new MeetUpResponse(meetUp.getId(), meetUp.getName(),meetUp.getAddress(), meetUp.getCity());
     }
 
     public List<MeetUpResponse> allMeetUps(){
@@ -104,6 +106,6 @@ public class MeetUpService {
     }
 
     private static MeetUpResponse create(MeetUp meetUp) {
-        return new MeetUpResponse(meetUp.getId(), meetUp.getName(), meetUp.getAddress());
+        return new MeetUpResponse(meetUp.getId(), meetUp.getName(), meetUp.getAddress(), meetUp.getCity());
     }
 }

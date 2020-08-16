@@ -16,4 +16,6 @@ public class MeetUpResponse {
     private String address;
 
     private String name;
+
+    private String city;
 }

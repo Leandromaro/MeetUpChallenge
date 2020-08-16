@@ -21,4 +21,10 @@ public class MeetUpExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleCustomException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleCustomIllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<>("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }
