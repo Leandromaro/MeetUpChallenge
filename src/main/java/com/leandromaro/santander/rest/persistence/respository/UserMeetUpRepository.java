@@ -11,10 +11,4 @@ import java.util.List;
 public interface UserMeetUpRepository extends CrudRepository<UserMeetUp, Long> {
 
     List<UserMeetUp> findAll();
-
-    @Query("SELECT u FROM UserMeetUp u where u.userName = ?1")
-    UserMeetUp findByUserName(String userName);
-
-
-
 }

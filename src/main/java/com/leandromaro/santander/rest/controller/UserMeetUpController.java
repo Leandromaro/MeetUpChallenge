@@ -1,7 +1,6 @@
 package com.leandromaro.santander.rest.controller;
 
 import com.leandromaro.santander.rest.domain.request.UserMeetUpRequest;
-import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.domain.response.UserMeetUpResponse;
 import com.leandromaro.santander.rest.service.UserMeetUpService;
 import org.springframework.http.HttpStatus;
@@ -30,6 +29,6 @@ public class UserMeetUpController {
         if(isNull(userMeetUpResponse)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userMeetUpResponse, HttpStatus.OK);
+        return new ResponseEntity<>(userMeetUpResponse, HttpStatus.CREATED);
     }
 }

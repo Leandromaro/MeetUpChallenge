@@ -59,8 +59,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp").permitAll()
 				.and().authorizeRequests().antMatchers(HttpMethod.GET, "/meetUp").permitAll()
 				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp/user").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp/{meetUpId}/users/userId").permitAll()
 				//
-				.anyRequest().authenticated().and()
+				//.anyRequest().authenticated()
+				.and()
 				.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()),
 						UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(jwtAuthorizationFilterBean(), UsernamePasswordAuthenticationFilter.class);

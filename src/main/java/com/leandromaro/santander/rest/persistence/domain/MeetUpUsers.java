@@ -1,9 +1,23 @@
 package com.leandromaro.santander.rest.persistence.domain;
 
-import javax.persistence.*;
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MeetUpUsers {
 
     @Id
@@ -18,7 +32,5 @@ public class MeetUpUsers {
     @JoinColumn(name = "user_id")
     private UserMeetUp user;
 
-    private Date userMeetUpDate;
-
-    private boolean userAttented;
+    private boolean userAttend;
 }

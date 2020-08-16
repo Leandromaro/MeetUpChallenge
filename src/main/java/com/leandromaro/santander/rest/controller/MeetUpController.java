@@ -42,18 +42,17 @@ public class MeetUpController {
         if(isNull(meetUp)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(meetUp, HttpStatus.OK);
+        return new ResponseEntity<>(meetUp, HttpStatus.CREATED);
     }
 
-  /*  @PostMapping
-    public ResponseEntity<MeetUpResponse> addUserToMeetUp(@Valid @RequestBody MeetUpRequest meetUpRequest) {
-        MeetUpResponse meetUp = meetUpService.createMeetUp(meetUpRequest);
-        if(isNull(meetUp)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(meetUp, HttpStatus.OK);
+    @PostMapping("/{meetUpId}/users/{userId}")
+    public ResponseEntity<MeetUpResponse> addUserToMeetUp(
+            @PathVariable long meetUpId,
+            @PathVariable long userId) {
+        meetUpService.enrollUserToMeetUp(meetUpId,userId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
-*/
+
     @GetMapping
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();
