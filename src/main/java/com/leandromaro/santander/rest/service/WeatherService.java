@@ -1,11 +1,12 @@
 package com.leandromaro.santander.rest.service;
 
-import com.leandromaro.santander.rest.client.domain.response.List;
 import com.leandromaro.santander.rest.client.domain.response.WeatherResponse;
-import com.leandromaro.santander.rest.domain.response.MeetUpBeerQuantityResponse;
+import com.leandromaro.santander.rest.client.domain.response.darkSky.DarkSkyResponse;
 import com.leandromaro.santander.rest.exceptions.MeetUpNotFoundException;
+import com.leandromaro.santander.rest.helper.UrlHelper;
 import com.leandromaro.santander.rest.persistence.domain.MeetUp;
 import com.leandromaro.santander.rest.persistence.respository.MeetUpRepository;
+import lombok.SneakyThrows;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,10 @@ import java.util.Optional;
 @Service
 public class WeatherService {
 
-    private static final String WEATHER_URL = "https://community-open-weather-map.p.rapidapi.com/forecast/daily";
-
-    private static final String country = "ar";
-
-    private static final String units = "units=metric";
-
-    private static final String cnt = "cnt=1";
-
-    private static final String HOST = "community-open-weather-map.p.rapidapi.com";
-
-    private static final String KEY = "hw5LL92VcdmshXW5REMeQyiBrO8np1hfjKUjsnYwH0r6ddFEcp";
-    public static final String AND = "&";
-    public static final String QUERY = "?q=";
+    private static final String OPEN_WEATHER_HOST = "community-open-weather-map.p.rapidapi.com";
+    private static final String OPEN_WEATHER_KEY = "hw5LL92VcdmshXW5REMeQyiBrO8np1hfjKUjsnYwH0r6ddFEcp";
+    private static final String DARK_SKY_HOST = "dark-sky.p.rapidapi.com";
+    private static final String DARK_SKY_KEY = "hw5LL92VcdmshXW5REMeQyiBrO8np1hfjKUjsnYwH0r6ddFEcp";
 
     private final RestTemplate restTemplate;
 
@@ -40,30 +32,34 @@ public class WeatherService {
         this.meetUpRepository = meetUpRepository;
     }
 
-    private static HttpHeaders getHeaders() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("x-rapidapi-host", HOST);
-        headers.set("x-rapidapi-key", KEY);
-        return headers;
-    }
-
-    public WeatherResponse getWeather(Long meetUpId) {
-        return getWeatherResponse(meetUpId);
-    }
- /*
-    public MeetUpBeerQuantityResponse getBeerQuantity (Long meetUpId) {
-        WeatherResponse weatherResponse = getWeatherResponse(meetUpId);
-
-    }
- */
-    private WeatherResponse getWeatherResponse(Long meetUpId) {
+    public DarkSkyResponse getWeather(Long meetUpId) {
         MeetUp meetUp = getMeetUp(meetUpId);
+        ResponseEntity<WeatherResponse> meetUpCity = getMeetUpCity(meetUp);
+
+        String meetUpDateString = getMeetUpDateString(meetUp);
+
+        ResponseEntity<DarkSkyResponse> meetUpCityWeather = getMeetUpCityWeather(meetUpCity, meetUpDateString);
+
+        return meetUpCityWeather.getBody();
+    }
+
+    private ResponseEntity<DarkSkyResponse> getMeetUpCityWeather(ResponseEntity<WeatherResponse> result, String meetUpDateString) {
+        HttpEntity<String> darkSkyRequest = new HttpEntity<>("", UrlHelper.getHeaders(DARK_SKY_HOST,DARK_SKY_KEY));
+        String lat = Double.toString(result.getBody().getCity().getCoord().getLat());
+        String lon = Double.toString(result.getBody().getCity().getCoord().getLon());
+        return restTemplate.exchange(URI.create(UrlHelper.buildCustomUrlByCity(lat,lon, meetUpDateString)), HttpMethod.GET, darkSkyRequest, DarkSkyResponse.class);
+    }
+
+    private String getMeetUpDateString(MeetUp meetUp) {
+        String meetUpDate = meetUp.getMeetUpdate().toString();
+        return meetUpDate.replace(" ", "T").replaceAll("[.]+([0-9]+)", "");
+    }
+
+    private ResponseEntity<WeatherResponse> getMeetUpCity(MeetUp meetUp) {
         String city = meetUp.getCity();
-        HttpEntity<String> request = new HttpEntity<>("", getHeaders());
-        String url = buildCustomUrlByCity(city);
-        ResponseEntity<WeatherResponse> result = restTemplate.exchange(URI.create(url), HttpMethod.GET, request, WeatherResponse.class);
-        return result.getBody();
+        HttpEntity<String> request = new HttpEntity<>("", UrlHelper.getHeaders(OPEN_WEATHER_HOST,OPEN_WEATHER_KEY));
+        String url = UrlHelper.buildCustomUrlByCity(city);
+        return restTemplate.exchange(URI.create(url), HttpMethod.GET, request, WeatherResponse.class);
     }
 
 
@@ -72,20 +68,6 @@ public class WeatherService {
         return meetUp.orElseThrow(() -> new MeetUpNotFoundException("Meet Up not found"));
     }
 
-    private String buildCustomUrlByCity(String city){
-        String encodedWitheSpaceCity = city.replaceAll("\\s+", "%20");
-        String params = new StringBuilder()
-                .append(WEATHER_URL)
-                .append(QUERY)
-                .append(encodedWitheSpaceCity)
-                .append(AND)
-                .append(country)
-                .append(AND)
-                .append(units)
-                .append(AND)
-                .append(cnt).toString();
-        return params;
-    }
 
     private Double getTemperatureOfMeetUp(MeetUp meetUp,  WeatherResponse weatherResponse){
         /*

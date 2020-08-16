@@ -7,11 +7,10 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.sun.media.sound.InvalidDataException;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CustomerDateAndTimeDeserialize extends JsonDeserializer<Date> {
+public final class CustomerDateAndTimeDeserialize extends JsonDeserializer<Date> {
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss");
@@ -19,7 +18,7 @@ public class CustomerDateAndTimeDeserialize extends JsonDeserializer<Date> {
     @Override
     public Date deserialize(JsonParser paramJsonParser,
                             DeserializationContext paramDeserializationContext)
-            throws IOException, JsonProcessingException {
+            throws IOException {
         String str = paramJsonParser.getText().trim();
         try {
             String[] split = str.split(" ");
@@ -34,7 +33,7 @@ public class CustomerDateAndTimeDeserialize extends JsonDeserializer<Date> {
             String minute = time.split(":")[1];
             String second = time.split(":")[2];
 
-            if(isaValidDateAndTime(year, month, day, hour, minute, second)){
+            if(isaValidDateOrTime(year, month, day, hour, minute, second)){
                 throw new InvalidDataException("Invalid Date Param");
             }
             return dateFormat.parse(str);
@@ -43,8 +42,8 @@ public class CustomerDateAndTimeDeserialize extends JsonDeserializer<Date> {
         }
     }
 
-    private boolean isaValidDateAndTime(String year, String month, String day, String hour, String minute, String second) {
-        return isValidDate(year, month, day) && isValidTime(hour, minute, second);
+    private boolean isaValidDateOrTime(String year, String month, String day, String hour, String minute, String second) {
+        return isValidDate(year, month, day) || isValidTime(hour, minute, second);
     }
 
     private boolean isValidTime(String hour, String minute, String second) {

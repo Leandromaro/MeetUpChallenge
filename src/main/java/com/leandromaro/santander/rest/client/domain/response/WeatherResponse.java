@@ -8,9 +8,4 @@ import lombok.Data;
 public class WeatherResponse {
 
     private City city;
-    private long cnt;
-    private String cod;
-    private java.util.List<List> list;
-    private double message;
-
 }

@@ -1,6 +1,7 @@
 package com.leandromaro.santander.rest.controller;
 
 import com.leandromaro.santander.rest.client.domain.response.WeatherResponse;
+import com.leandromaro.santander.rest.client.domain.response.darkSky.DarkSkyResponse;
 import com.leandromaro.santander.rest.domain.request.MeetUpRequest;
 import com.leandromaro.santander.rest.domain.response.MeetUpBeerQuantityResponse;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
@@ -74,10 +75,10 @@ public class MeetUpController {
     }
 
     @GetMapping("/{meetUpId}/weather")
-    public ResponseEntity<WeatherResponse> getMeetUpWeather(
+    public ResponseEntity<DarkSkyResponse> getMeetUpWeather(
             @PathVariable long meetUpId){
-        WeatherResponse weather = weatherService.getWeather(meetUpId);
-        return new ResponseEntity<>(weather, HttpStatus.OK);
+        DarkSkyResponse darkSkyResponse = weatherService.getWeather(meetUpId);
+        return new ResponseEntity<>(darkSkyResponse, HttpStatus.OK);
     }
 /*
     @GetMapping("/{meetUpId}/beerQuantity")

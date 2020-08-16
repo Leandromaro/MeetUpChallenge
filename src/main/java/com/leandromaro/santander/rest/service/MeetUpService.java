@@ -14,10 +14,8 @@ import com.leandromaro.santander.rest.persistence.respository.UserMeetUpReposito
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
-import java.util.TimeZone;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -40,11 +38,6 @@ public class MeetUpService {
     }
 
     public MeetUpResponse createMeetUp(MeetUpRequest meetUpRequest){
-       /*
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String format = sdf.format(meetUpRequest.getDate());
-        */
         MeetUp meet = MeetUp.builder()
                 .address(meetUpRequest.getAddress())
                 .meetUpdate(meetUpRequest.getDate())
