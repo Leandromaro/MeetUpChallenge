@@ -45,6 +45,15 @@ public class MeetUpController {
         return new ResponseEntity<>(meetUp, HttpStatus.OK);
     }
 
+  /*  @PostMapping
+    public ResponseEntity<MeetUpResponse> addUserToMeetUp(@Valid @RequestBody MeetUpRequest meetUpRequest) {
+        MeetUpResponse meetUp = meetUpService.createMeetUp(meetUpRequest);
+        if(isNull(meetUp)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(meetUp, HttpStatus.OK);
+    }
+*/
     @GetMapping
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();

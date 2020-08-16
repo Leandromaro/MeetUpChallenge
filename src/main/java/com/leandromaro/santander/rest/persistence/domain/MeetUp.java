@@ -12,24 +12,23 @@ import java.util.Set;
 
 
 @Entity
-@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class MeetUp {
-	
+
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "meetUp")
 	@JsonIgnore
 	private Set<MeetUpUsers> meetUpUser;
-	
-	private LocalDate date;
-	
+
+	private LocalDate meetUpdate;
+
 	private String address;
 
 	private String name;
-
 }

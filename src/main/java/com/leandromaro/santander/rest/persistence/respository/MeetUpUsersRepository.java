@@ -1,8 +1,9 @@
-package com.leandromaro.santander.rest.persistence.repository;
+package com.leandromaro.santander.rest.persistence.respository;
 
 import com.leandromaro.santander.rest.persistence.domain.MeetUpUsers;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.List;
 
