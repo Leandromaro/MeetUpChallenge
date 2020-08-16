@@ -13,8 +13,6 @@ public class MeetUpResponse {
 
     Long id;
 
-    private LocalDate date;
-
     private String address;
 
     private String name;
