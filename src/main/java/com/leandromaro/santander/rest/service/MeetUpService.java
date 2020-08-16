@@ -2,6 +2,7 @@ package com.leandromaro.santander.rest.service;
 
 import com.leandromaro.santander.rest.domain.request.MeetUpRequest;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
+import com.leandromaro.santander.rest.exceptions.MeetUpUserEventNotFoundException;
 import com.leandromaro.santander.rest.exceptions.MeetUpNotFoundException;
 import com.leandromaro.santander.rest.exceptions.UserNotFoundException;
 import com.leandromaro.santander.rest.persistence.domain.MeetUp;
@@ -12,9 +13,10 @@ import com.leandromaro.santander.rest.persistence.respository.MeetUpUsersReposit
 import com.leandromaro.santander.rest.persistence.respository.UserMeetUpRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +36,6 @@ public class MeetUpService {
         this.meetUpUsersRepository = meetUpUsersRepository;
     }
 
-
     public MeetUpResponse createMeetUp(MeetUpRequest meetUpRequest){
         MeetUp meet = MeetUp.builder()
                 .address(meetUpRequest.getAddress())
@@ -49,22 +50,55 @@ public class MeetUpService {
     public List<MeetUpResponse> allMeetUps(){
         List<MeetUp> all = meetUpRepository.findAll();
         return all.stream()
-                .map(meetUp -> new MeetUpResponse(meetUp.getId(),meetUp.getName(),meetUp.getAddress()))
+                .map(MeetUpService::create)
                 .collect(Collectors.toList());
     }
 
     public void enrollUserToMeetUp(long meetUpId,
                                    long userId){
-        Optional<UserMeetUp> userMeetUp = userMeetUpRepository.findById(userId);
-        UserMeetUp userFound = userMeetUp.orElseThrow(() -> new UserNotFoundException("User Not Found"));
+        UserMeetUp userFound = getUserMeetUp(userId);
 
-        Optional<MeetUp> meetUp = meetUpRepository.findById(meetUpId);
-        MeetUp meetFound = meetUp.orElseThrow(() -> new MeetUpNotFoundException("Meet Up not found"));
+        MeetUp meetFound = getMeetUp(meetUpId);
 
         MeetUpUsers meetUpUsers = MeetUpUsers.builder()
                 .meetUp(meetFound)
                 .user(userFound)
                 .build();
         meetUpUsersRepository.save(meetUpUsers);
+    }
+
+    @Transactional
+    public void checkInUserToMeetUp(long meetUpId,
+                                   long userId){
+        UserMeetUp userFound = getUserMeetUp(userId);
+
+        MeetUp meetFound = getMeetUp(meetUpId);
+
+        MeetUpUsers upUsers = meetUpUsersRepository.findAll()
+                .stream()
+                .filter(getMeetUpUsersPredicate(userFound, meetFound))
+                .findFirst()
+                .orElseThrow(() -> new MeetUpUserEventNotFoundException("Event Not Found"));
+
+        meetUpUsersRepository.activeUser(upUsers.getId());
+    }
+
+    private Predicate<MeetUpUsers> getMeetUpUsersPredicate(UserMeetUp userFound, MeetUp meetFound) {
+        return meetUpUsers -> meetUpUsers.getMeetUp().getId().equals(meetFound.getId()) &&
+                meetUpUsers.getUser().getId().equals(userFound.getId());
+    }
+
+    private MeetUp getMeetUp(long meetUpId) {
+        Optional<MeetUp> meetUp = meetUpRepository.findById(meetUpId);
+        return meetUp.orElseThrow(() -> new MeetUpNotFoundException("Meet Up not found"));
+    }
+
+    private UserMeetUp getUserMeetUp(long userId) {
+        Optional<UserMeetUp> userMeetUp = userMeetUpRepository.findById(userId);
+        return userMeetUp.orElseThrow(() -> new UserNotFoundException("User Not Found"));
+    }
+
+    private static MeetUpResponse create(MeetUp meetUp) {
+        return new MeetUpResponse(meetUp.getId(), meetUp.getName(), meetUp.getAddress());
     }
 }

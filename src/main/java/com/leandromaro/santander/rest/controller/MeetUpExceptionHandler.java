@@ -1,5 +1,6 @@
 package com.leandromaro.santander.rest.controller;
 
+import com.leandromaro.santander.rest.exceptions.MeetUpUserEventNotFoundException;
 import com.leandromaro.santander.rest.exceptions.MeetUpNotFoundException;
 import com.leandromaro.santander.rest.exceptions.UserNotFoundException;
 import org.springframework.core.Ordered;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class MeetUpExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({UserNotFoundException.class, MeetUpNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, MeetUpNotFoundException.class, MeetUpUserEventNotFoundException.class})
     public ResponseEntity<String> handleCustomException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }

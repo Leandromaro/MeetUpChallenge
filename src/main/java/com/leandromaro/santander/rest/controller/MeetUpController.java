@@ -53,6 +53,14 @@ public class MeetUpController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PutMapping("/{meetUpId}/users/{userId}/checkIn")
+    public ResponseEntity<MeetUpResponse> checkInUserToMeetUp(
+            @PathVariable long meetUpId,
+            @PathVariable long userId) {
+        meetUpService.checkInUserToMeetUp(meetUpId,userId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();

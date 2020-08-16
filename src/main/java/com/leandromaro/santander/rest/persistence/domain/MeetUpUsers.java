@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@DynamicUpdate
 public class MeetUpUsers {
 
     @Id
@@ -32,5 +34,5 @@ public class MeetUpUsers {
     @JoinColumn(name = "user_id")
     private UserMeetUp user;
 
-    private boolean userAttend;
+    private Boolean userAttend;
 }
