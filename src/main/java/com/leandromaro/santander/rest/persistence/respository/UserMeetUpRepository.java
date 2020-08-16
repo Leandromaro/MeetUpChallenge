@@ -15,4 +15,6 @@ public interface UserMeetUpRepository extends CrudRepository<UserMeetUp, Long> {
     @Query("SELECT u FROM UserMeetUp u where u.userName = ?1")
     UserMeetUp findByUserName(String userName);
 
+
+
 }

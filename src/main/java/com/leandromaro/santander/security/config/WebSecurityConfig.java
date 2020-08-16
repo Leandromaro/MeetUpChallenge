@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// ELIMINAR
 				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp").permitAll()
 				.and().authorizeRequests().antMatchers(HttpMethod.GET, "/meetUp").permitAll()
+				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp/user").permitAll()
 				//
 				.anyRequest().authenticated().and()
 				.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()),

@@ -12,6 +12,5 @@ import java.util.List;
 public interface MeetUpRepository extends CrudRepository<MeetUp, Long> {
 	
 	List<MeetUp> findAll();
-	
 
 }

@@ -1,9 +1,18 @@
 package com.leandromaro.santander.rest.persistence.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UserMeetUp {
 
 	@Id
@@ -15,10 +24,6 @@ public class UserMeetUp {
 
 	private String firstName;
 	
-	private String userName;
-	
 	private String lastName;
-	
-	private String password;
 
 }
