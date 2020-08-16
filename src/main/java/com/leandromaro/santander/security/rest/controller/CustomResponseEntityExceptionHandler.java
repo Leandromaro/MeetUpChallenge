@@ -1,6 +1,8 @@
 package com.leandromaro.santander.security.rest.controller;
 
 import com.leandromaro.santander.security.rest.domain.ErrorMessage;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -14,6 +16,7 @@ import java.util.Date;
 
 @ControllerAdvice
 @RestController
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)

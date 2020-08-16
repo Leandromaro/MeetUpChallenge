@@ -2,6 +2,8 @@ package com.leandromaro.santander.rest.service;
 
 import com.leandromaro.santander.rest.domain.request.MeetUpRequest;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
+import com.leandromaro.santander.rest.exceptions.MeetUpNotFoundException;
+import com.leandromaro.santander.rest.exceptions.UserNotFoundException;
 import com.leandromaro.santander.rest.persistence.domain.MeetUp;
 import com.leandromaro.santander.rest.persistence.domain.MeetUpUsers;
 import com.leandromaro.santander.rest.persistence.domain.UserMeetUp;
@@ -54,10 +56,14 @@ public class MeetUpService {
     public void enrollUserToMeetUp(long meetUpId,
                                    long userId){
         Optional<UserMeetUp> userMeetUp = userMeetUpRepository.findById(userId);
-        Optional<MeetUp> byId = meetUpRepository.findById(meetUpId);
+        UserMeetUp userFound = userMeetUp.orElseThrow(() -> new UserNotFoundException("User Not Found"));
+
+        Optional<MeetUp> meetUp = meetUpRepository.findById(meetUpId);
+        MeetUp meetFound = meetUp.orElseThrow(() -> new MeetUpNotFoundException("Meet Up not found"));
+
         MeetUpUsers meetUpUsers = MeetUpUsers.builder()
-                .meetUp(byId.get())
-                .user(userMeetUp.get())
+                .meetUp(meetFound)
+                .user(userFound)
                 .build();
         meetUpUsersRepository.save(meetUpUsers);
     }
