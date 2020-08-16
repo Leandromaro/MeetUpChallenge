@@ -5,7 +5,14 @@ import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.service.MeetUpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -19,8 +26,10 @@ public class MeetUpController {
 
     private final MeetUpService meetUpService;
 
+
     MeetUpController(MeetUpService meetUpService) {
         this.meetUpService = meetUpService;
+
     }
 
 
@@ -53,7 +62,7 @@ public class MeetUpController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{meetUpId}/users/{userId}/checkIn")
+    @PatchMapping("/{meetUpId}/users/{userId}/checkIn")
     public ResponseEntity<MeetUpResponse> checkInUserToMeetUp(
             @PathVariable long meetUpId,
             @PathVariable long userId) {
@@ -69,5 +78,4 @@ public class MeetUpController {
         }
         return new ResponseEntity<>(meetUpResponses, HttpStatus.OK);
     }
-
 }

@@ -2,8 +2,8 @@ package com.leandromaro.santander.rest.service;
 
 import com.leandromaro.santander.rest.domain.request.MeetUpRequest;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
-import com.leandromaro.santander.rest.exceptions.MeetUpUserEventNotFoundException;
 import com.leandromaro.santander.rest.exceptions.MeetUpNotFoundException;
+import com.leandromaro.santander.rest.exceptions.MeetUpUserEventNotFoundException;
 import com.leandromaro.santander.rest.exceptions.UserNotFoundException;
 import com.leandromaro.santander.rest.persistence.domain.MeetUp;
 import com.leandromaro.santander.rest.persistence.domain.MeetUpUsers;
@@ -74,14 +74,19 @@ public class MeetUpService {
 
         MeetUp meetFound = getMeetUp(meetUpId);
 
-        MeetUpUsers upUsers = meetUpUsersRepository.findAll()
+        MeetUpUsers upUsers = getMeetUpUsers(userFound, meetFound);
+
+        meetUpUsersRepository.activeUser(upUsers.getId());
+    }
+
+    private MeetUpUsers getMeetUpUsers(UserMeetUp userFound, MeetUp meetFound) {
+        return meetUpUsersRepository.findAll()
                 .stream()
                 .filter(getMeetUpUsersPredicate(userFound, meetFound))
                 .findFirst()
                 .orElseThrow(() -> new MeetUpUserEventNotFoundException("Event Not Found"));
-
-        meetUpUsersRepository.activeUser(upUsers.getId());
     }
+
 
     private Predicate<MeetUpUsers> getMeetUpUsersPredicate(UserMeetUp userFound, MeetUp meetFound) {
         return meetUpUsers -> meetUpUsers.getMeetUp().getId().equals(meetFound.getId()) &&

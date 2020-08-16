@@ -23,7 +23,13 @@ public class UserMeetUp {
 	private Set<MeetUpUsers> meetUpUser;
 
 	private String firstName;
-	
+
+	private String middleName;
+
 	private String lastName;
+
+	private String mobileNumber;
+
+	private String email;
 
 }
