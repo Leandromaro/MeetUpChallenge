@@ -55,6 +55,8 @@ The app by deafult counts with two users:
 
 ## Using
  - Use swagger UI + Bearer Token
+ 
+ 
    [![N|Solid](https://miro.medium.com/max/672/1*wZZzz51HAzoA1cUQrlkC_w.png)]()
     -  Value: Beares + JwtToken
  - Use postman collection (Santander.postman_collection.json) placed in resources
