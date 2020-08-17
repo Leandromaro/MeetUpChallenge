@@ -1,4 +1,4 @@
-package com.leandromaro.santander.config;
+package com.leandromaro.santander.rest.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

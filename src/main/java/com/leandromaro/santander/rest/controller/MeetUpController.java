@@ -6,21 +6,18 @@ import com.leandromaro.santander.rest.domain.response.BeerQuantityResponse;
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.service.MeetUpService;
 import com.leandromaro.santander.rest.service.WeatherService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static java.util.Objects.isNull;
+import static javax.servlet.http.HttpServletResponse.*;
 
 @RestController
 @RequestMapping("/meetUps")
@@ -36,6 +33,13 @@ public class MeetUpController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ApiOperation(value = "Creates MeetUps")
+    @ApiResponses(value = { @ApiResponse(code = SC_CREATED, message = "created"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
+    @ResponseStatus(value = HttpStatus.CREATED)
     @PostMapping
     public ResponseEntity<MeetUpResponse> createMeetUp(@RequestBody MeetUpRequest meetUpRequest) {
         MeetUpResponse meetUp = meetUpService.createMeetUp(meetUpRequest);
@@ -47,6 +51,13 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/{meetUpId}/users/{userId}")
+    @ApiOperation(value = "Enroll User To MeetUp")
+    @ApiResponses(value = { @ApiResponse(code = SC_CREATED, message = "created"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<MeetUpResponse> enrollUserToMeetUp(
             @PathVariable long meetUpId,
             @PathVariable long userId) {
@@ -56,6 +67,12 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PatchMapping("/{meetUpId}/users/{userId}/checkIn")
+    @ApiOperation(value = "Check in User To MeetUp")
+    @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
     public ResponseEntity<MeetUpResponse> checkInUserToMeetUp(
             @PathVariable long meetUpId,
             @PathVariable long userId) {
@@ -65,6 +82,12 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @GetMapping("/{meetUpId}/weather")
+    @ApiOperation(value = "Get MeetUp Weather")
+    @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
     public ResponseEntity<DarkSkyResponse> getMeetUpWeather(
             @PathVariable long meetUpId){
         DarkSkyResponse darkSkyResponse = weatherService.getWeather(meetUpId);
@@ -73,6 +96,12 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{meetUpId}/beerQuantity")
+    @ApiOperation(value = "Get number of beer to buy")
+    @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
     public ResponseEntity<BeerQuantityResponse> getMeetUpBeerQuantity(
             @PathVariable long meetUpId){
         BeerQuantityResponse beerQuantity = weatherService.getMeetUpBeerQuantity(meetUpId);
@@ -81,6 +110,12 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @GetMapping
+    @ApiOperation(value = "Get all the registered MeetUps")
+    @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();
         if(meetUpResponses.isEmpty()){

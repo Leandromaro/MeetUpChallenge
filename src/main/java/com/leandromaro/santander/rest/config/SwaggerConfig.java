@@ -1,4 +1,4 @@
-package com.leandromaro.santander.config;
+package com.leandromaro.santander.rest.config;
 
 
 import org.springframework.context.annotation.Bean;

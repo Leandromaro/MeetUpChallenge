@@ -2,14 +2,16 @@ package com.leandromaro.santander.rest.controller;
 
 import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.service.NotificationService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static javax.servlet.http.HttpServletResponse.*;
+import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 
 @RestController
 @RequestMapping("/notify")
@@ -24,6 +26,13 @@ public class NotificationController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @PostMapping("/meetUps/{meetUpId}")
+    @ApiOperation(value = "Notify all Users into a MeetUp")
+    @ApiResponses(value = { @ApiResponse(code = SC_ACCEPTED, message = "accepted"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
     public ResponseEntity<MeetUpResponse> notifyUserToMeetUp(
             @PathVariable long meetUpId) {
         notificationService.notifyUserToMeetUp(meetUpId);
@@ -32,6 +41,13 @@ public class NotificationController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @PostMapping("/meetUps/{meetUpId}/users/{userId}")
+    @ApiOperation(value = "Notify a single Users into a MeetUp")
+    @ApiResponses(value = { @ApiResponse(code = SC_ACCEPTED, message = "accepted"),
+            @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
+            @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
+    })
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
     public ResponseEntity<MeetUpResponse> notifyUserToMeetUp(
             @PathVariable long meetUpId,
             @PathVariable long userId) {
