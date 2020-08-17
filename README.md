@@ -23,19 +23,16 @@ $ ./gradlew build
 ./gradlew bootRun
 ```
 
-Default port 8080.
+ - Default port 8080.
 
-### Swagger
-
-http://localhost:8080/swagger-ui.html
 
 ### Authentication
 
 The app by deafult counts with two users:
  - User 1 (Admin)
-  - user: user1
-  - password: password1
- - User 3 (Normal)
+   - user: user1
+    - password: password1
+- User 3 (Normal)
   - user: user3
   - password: password3
 
@@ -43,11 +40,25 @@ The app by deafult counts with two users:
   - request
     - localhost:8080/login
   - body
-    - ```sh
+     ```sh
     {
 	  "user":"user1",
 	  "password": "password1"
     }
     ```
  2 - Take the "Bearer Token" from headers
+
+
+### Swagger
+[![N|Solid](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwdFKqBMgBqxCu2kPtfWAPyWtU4OObc_igMQ&usqp=CAU)](http://localhost:8080/swagger-ui.html)
+
+### Using
+ - Use swagger UI + Bearer Token
+   [![N|Solid](https://miro.medium.com/max/672/1*wZZzz51HAzoA1cUQrlkC_w.png)]()
+    -  Value: Beares + JwtToken
+ - Use postman collection (Santander.postman_collection.json) placed in resources
+
+### Enjoy :)
+
+ 
  
