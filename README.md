@@ -31,4 +31,11 @@ http://localhost:8080/swagger-ui.html
 
 ### Authentication
 
- 1 - 
+The app by deafult counts with two users:
+ - User 1
+ - User 3
+
+ 1 - Log with the user 
+  - request
+    - localhost:8080/login
+ 
