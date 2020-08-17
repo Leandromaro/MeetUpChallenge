@@ -39,7 +39,7 @@ public class UserMeetUpController {
             @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
     })
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<UserMeetUpResponse> createMeetUp(@Valid @RequestBody UserMeetUpRequest userMeetUpRequest) {
+    public ResponseEntity<UserMeetUpResponse> createUser(@Valid @RequestBody UserMeetUpRequest userMeetUpRequest) {
         UserMeetUpResponse userMeetUpResponse = userMeetUpService.storeUser(userMeetUpRequest);
         if(isNull(userMeetUpResponse)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

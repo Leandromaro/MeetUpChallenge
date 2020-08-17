@@ -29,7 +29,7 @@ public class UserControllerTest {
     public void userControllerMustReturnNotNullResponseEntityResponseTest(){
         when(userMeetUpService.storeUser(any())).thenReturn(new UserMeetUpResponse(1l));
         UserMeetUpRequest userMeetUpRequest = new UserMeetUpRequest("test", "test");
-        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createMeetUp(userMeetUpRequest);
+        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createUser(userMeetUpRequest);
         assertNotNull(userMeetUp);
     }
 
@@ -37,7 +37,7 @@ public class UserControllerTest {
     public void userControllerMustReturnResponseEntityResponseTest(){
         when(userMeetUpService.storeUser(any())).thenReturn(new UserMeetUpResponse(1l));
         UserMeetUpRequest userMeetUpRequest = new UserMeetUpRequest("test", "test");
-        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createMeetUp(userMeetUpRequest);
+        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createUser(userMeetUpRequest);
         assertEquals("Response must be ResponseEntity ",userMeetUp.getClass(), ResponseEntity.class);
     }
 
@@ -45,7 +45,7 @@ public class UserControllerTest {
     public void userControllerMustReturnNotNullBodyTest(){
         when(userMeetUpService.storeUser(any())).thenReturn(new UserMeetUpResponse(1l));
         UserMeetUpRequest userMeetUpRequest = new UserMeetUpRequest("test", "test");
-        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createMeetUp(userMeetUpRequest);
+        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createUser(userMeetUpRequest);
         assertNotNull(userMeetUp.getBody());
     }
 
@@ -53,7 +53,7 @@ public class UserControllerTest {
     public void userControllerMustReturnUserMeetUpResponseBodyTest(){
         when(userMeetUpService.storeUser(any())).thenReturn(new UserMeetUpResponse(1l));
         UserMeetUpRequest userMeetUpRequest = new UserMeetUpRequest("test", "test");
-        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createMeetUp(userMeetUpRequest);
+        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createUser(userMeetUpRequest);
         assertEquals("Response body must be UserMeetUpResponse",userMeetUp.getBody().getClass(), UserMeetUpResponse.class);
     }
 
@@ -61,7 +61,7 @@ public class UserControllerTest {
     public void userControllerMustReturnResponseEntityResponseStatusCode200Test(){
         when(userMeetUpService.storeUser(any())).thenReturn(new UserMeetUpResponse(1l));
         UserMeetUpRequest userMeetUpRequest = new UserMeetUpRequest("test", "test");
-        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createMeetUp(userMeetUpRequest);
-        assertTrue("Response must be ResponseEntity ",userMeetUp.getStatusCode().is2xxSuccessful());
+        ResponseEntity<UserMeetUpResponse> userMeetUp = userMeetUpController.createUser(userMeetUpRequest);
+        assertTrue("Response must be family 200 ",userMeetUp.getStatusCode().is2xxSuccessful());
     }
 }

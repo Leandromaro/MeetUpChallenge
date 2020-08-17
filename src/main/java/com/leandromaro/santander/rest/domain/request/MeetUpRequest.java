@@ -15,11 +15,9 @@ import java.util.Date;
 public class MeetUpRequest {
     private String name;
 
-   // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-   //@JsonFormat(shape = JsonFormat.Shape.STRING ,pattern="yyyy-MM-dd'T'HH:mm:ss", timezone = "UTC")
-   @JsonDeserialize(using= CustomerDateAndTimeDeserialize.class)
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
-   private Date date;
+    @JsonDeserialize(using= CustomerDateAndTimeDeserialize.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
+    private Date date;
 
     private String address;
 
