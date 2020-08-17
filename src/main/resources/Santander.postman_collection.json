@@ -1,0 +1,513 @@
+{
+	"info": {
+		"_postman_id": "8ef576ad-3386-4c39-80c6-83332fa4530c",
+		"name": "Santander",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "JWT Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\":\"leandromaro\",\n\t\"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:8080/users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsIkNMQUlNX1RPS0VOIjoiUk9MRV9BRE1JTiIsImlhdCI6MTU5NzYyNTI4MiwiaXNzIjoiSVNTVUVSIiwiZXhwIjoxNTk3NjU0MDgyfQ.wFKXCuACGv24vfsomXlCEnyIjwtCXRCsyrZj75Li3t0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\": \"leandromaro\",\n\t\"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=buenos aires&ar&units=metric&cnt=16",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "community-open-weather-map.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "hw5LL92VcdmshXW5REMeQyiBrO8np1hfjKUjsnYwH0r6ddFEcp",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://community-open-weather-map.p.rapidapi.com/forecast/daily?q=Buenos%20Aires&ar&units=metric&cnt=1",
+					"protocol": "https",
+					"host": [
+						"community-open-weather-map",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"forecast",
+						"daily"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Buenos%20Aires"
+						},
+						{
+							"key": "ar",
+							"value": null
+						},
+						{
+							"key": "units",
+							"value": "metric"
+						},
+						{
+							"key": "cnt",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alta MEET UP",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsIkNMQUlNX1RPS0VOIjoiUk9MRV9BRE1JTiIsImlhdCI6MTU5NzYyNTI4MiwiaXNzIjoiSVNTVUVSIiwiZXhwIjoxNTk3NjU0MDgyfQ.wFKXCuACGv24vfsomXlCEnyIjwtCXRCsyrZj75Li3t0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test2\",\n\t\"address\":\"test2\",\n\t\"date\": \"2022-10-20 22:22:22\",\n\t\"city\": \"Resistencia\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/meetUps",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetUps"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREAR USER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsIkNMQUlNX1RPS0VOIjoiUk9MRV9BRE1JTiIsImlhdCI6MTU5NzYyNTI4MiwiaXNzIjoiSVNTVUVSIiwiZXhwIjoxNTk3NjU0MDgyfQ.wFKXCuACGv24vfsomXlCEnyIjwtCXRCsyrZj75Li3t0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\":\"test\",\n\t\"lastName\" : \"test\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/meetUps/user",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetUps",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar Usuario en MeetUp",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMyIsIkNMQUlNX1RPS0VOIjoiUk9MRV9VU0VSIiwiaWF0IjoxNTk3NjI0NzU1LCJpc3MiOiJJU1NVRVIiLCJleHAiOjE1OTc2NTM1NTV9.ONegiX8lkIRMkAEboTfaKZ1HvL66tG96hSKQ3yePp3A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test2\",\n\t\"address\":\"test2\",\n\t\"date\": \"1111-11-11\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/meetUps/1/users/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetUps",
+						"1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CheckIn User Meet Up",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test2\",\n\t\"address\":\"test2\",\n\t\"date\": \"1111-11-11\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/meetUps/1/users/1/checkIn",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetUps",
+						"1",
+						"users",
+						"1",
+						"checkIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notificar meetUps",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test2\",\n\t\"address\":\"test2\",\n\t\"date\": \"1111-11-11\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/notify/meetUps/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"notify",
+						"meetUps",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Notificar Usuario en Particular Sobre una meeting en particular",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test2\",\n\t\"address\":\"test2\",\n\t\"date\": \"1111-11-11\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/notify/meetUps/1/users/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"notify",
+						"meetUps",
+						"1",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Meet Up CLIMA",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test2\",\n\t\"address\":\"test2\",\n\t\"date\": \"1111-11-11\",\n\t\"city\": \"Resistencia\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/meetUps/1/weather",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetUps",
+						"1",
+						"weather"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DarkSky",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-rapidapi-host",
+						"value": "dark-sky.p.rapidapi.com",
+						"type": "text"
+					},
+					{
+						"key": "x-rapidapi-key",
+						"value": "hw5LL92VcdmshXW5REMeQyiBrO8np1hfjKUjsnYwH0r6ddFEcp",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://dark-sky.p.rapidapi.com/-34.6132,-58.3772,2022-02-20T22:22:22",
+					"protocol": "https",
+					"host": [
+						"dark-sky",
+						"p",
+						"rapidapi",
+						"com"
+					],
+					"path": [
+						"-34.6132,-58.3772,2022-02-20T22:22:22"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cantidad Birra MeetUp",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsIkNMQUlNX1RPS0VOIjoiUk9MRV9BRE1JTixST0xFX1VTRVIiLCJpYXQiOjE1OTc2MjQ0NTcsImlzcyI6IklTU1VFUiIsImV4cCI6MTU5NzY1MzI1N30.EM34S3c74LmeqGY9mtrCepzz2ue92idI0XlHVGxD8Vw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"test2\",\n\t\"address\":\"test2\",\n\t\"date\": \"1111-11-11\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/meetUps/1/beerQuantity",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetUps",
+						"1",
+						"beerQuantity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET ALL MEETUPS",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMyIsIkNMQUlNX1RPS0VOIjoiUk9MRV9VU0VSIiwiaWF0IjoxNTk3NjI0NzU1LCJpc3MiOiJJU1NVRVIiLCJleHAiOjE1OTc2NTM1NTV9.ONegiX8lkIRMkAEboTfaKZ1HvL66tG96hSKQ3yePp3A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8080/meetUps",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"meetUps"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
