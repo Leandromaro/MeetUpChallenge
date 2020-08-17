@@ -20,4 +20,15 @@ Follow the next steps to use
 $ git clone
 $ cd santanderCallenger
 $ ./gradlew build
+./gradlew bootRun
 ```
+
+Default port 8080.
+
+### Swagger
+
+http://localhost:8080/swagger-ui.html
+
+### Authentication
+
+ 1 - 
