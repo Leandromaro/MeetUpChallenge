@@ -52,6 +52,7 @@ The app by deafult counts with two users:
 ## Swagger
 [![N|Solid](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwdFKqBMgBqxCu2kPtfWAPyWtU4OObc_igMQ&usqp=CAU)](http://localhost:8080/swagger-ui.html)
 
+
 ## Using
  - Use swagger UI + Bearer Token
    [![N|Solid](https://miro.medium.com/max/672/1*wZZzz51HAzoA1cUQrlkC_w.png)]()
