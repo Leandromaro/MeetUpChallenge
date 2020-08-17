@@ -8,6 +8,7 @@ import com.leandromaro.santander.rest.service.MeetUpService;
 import com.leandromaro.santander.rest.service.WeatherService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,7 +23,7 @@ import java.util.List;
 import static java.util.Objects.isNull;
 
 @RestController
-@RequestMapping("/meetUp")
+@RequestMapping("/meetUps")
 @CrossOrigin
 public class MeetUpController {
 
@@ -34,18 +35,7 @@ public class MeetUpController {
         this.weatherService = weatherService;
     }
 
-    //@PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
-    @GetMapping("/{id}")
-    public ResponseEntity<String> getNormalUser(@PathVariable long id) {
-        return new ResponseEntity<>("Hi Others", HttpStatus.OK);
-    }
-
-    //@PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("/admin/{id}")
-    public ResponseEntity<String> getAdminUser(@PathVariable long id) {
-        return new ResponseEntity<>("Hi Admin", HttpStatus.OK);
-    }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<MeetUpResponse> createMeetUp(@RequestBody MeetUpRequest meetUpRequest) {
         MeetUpResponse meetUp = meetUpService.createMeetUp(meetUpRequest);
@@ -55,14 +45,16 @@ public class MeetUpController {
         return new ResponseEntity<>(meetUp, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/{meetUpId}/users/{userId}")
-    public ResponseEntity<MeetUpResponse> addUserToMeetUp(
+    public ResponseEntity<MeetUpResponse> enrollUserToMeetUp(
             @PathVariable long meetUpId,
             @PathVariable long userId) {
         meetUpService.enrollUserToMeetUp(meetUpId,userId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PatchMapping("/{meetUpId}/users/{userId}/checkIn")
     public ResponseEntity<MeetUpResponse> checkInUserToMeetUp(
             @PathVariable long meetUpId,
@@ -71,6 +63,7 @@ public class MeetUpController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @GetMapping("/{meetUpId}/weather")
     public ResponseEntity<DarkSkyResponse> getMeetUpWeather(
             @PathVariable long meetUpId){
@@ -78,6 +71,7 @@ public class MeetUpController {
         return new ResponseEntity<>(darkSkyResponse, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{meetUpId}/beerQuantity")
     public ResponseEntity<BeerQuantityResponse> getMeetUpBeerQuantity(
             @PathVariable long meetUpId){
@@ -85,7 +79,7 @@ public class MeetUpController {
         return new ResponseEntity<>(beerQuantity, HttpStatus.OK);
     }
 
-
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<MeetUpResponse>> getAllMeetUps(){
         List<MeetUpResponse> meetUpResponses = meetUpService.allMeetUps();

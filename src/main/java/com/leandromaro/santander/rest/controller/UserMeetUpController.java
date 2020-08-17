@@ -5,6 +5,7 @@ import com.leandromaro.santander.rest.domain.response.UserMeetUpResponse;
 import com.leandromaro.santander.rest.service.UserMeetUpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class UserMeetUpController {
         this.userMeetUpService = userMeetUpService;
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<UserMeetUpResponse> createMeetUp(@Valid @RequestBody UserMeetUpRequest userMeetUpRequest) {
         UserMeetUpResponse userMeetUpResponse = userMeetUpService.storeUser(userMeetUpRequest);

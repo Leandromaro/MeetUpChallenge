@@ -55,13 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.cors().and()
 				.csrf().disable()
 				.authorizeRequests().antMatchers(HttpMethod.POST, "/login").permitAll()
-				// ELIMINAR
-				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp").permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.GET, "/meetUp").permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp/user").permitAll()
-				.and().authorizeRequests().antMatchers(HttpMethod.POST, "/meetUp/{meetUpId}/users/userId").permitAll()
-				//
-				//.anyRequest().authenticated()
+				.anyRequest().authenticated()
 				.and()
 				.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()),
 						UsernamePasswordAuthenticationFilter.class)

@@ -4,6 +4,7 @@ import com.leandromaro.santander.rest.domain.response.MeetUpResponse;
 import com.leandromaro.santander.rest.service.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @PostMapping("/meetUps/{meetUpId}")
     public ResponseEntity<MeetUpResponse> notifyUserToMeetUp(
             @PathVariable long meetUpId) {
@@ -28,6 +30,7 @@ public class NotificationController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @PostMapping("/meetUps/{meetUpId}/users/{userId}")
     public ResponseEntity<MeetUpResponse> notifyUserToMeetUp(
             @PathVariable long meetUpId,
