@@ -32,10 +32,22 @@ http://localhost:8080/swagger-ui.html
 ### Authentication
 
 The app by deafult counts with two users:
- - User 1
- - User 3
+ - User 1 (Admin)
+  - user: user1
+  - password: password1
+ - User 3 (Normal)
+  - user: user3
+  - password: password3
 
  1 - Log with the user 
   - request
     - localhost:8080/login
+  - body
+    - ```sh
+    {
+	  "user":"user1",
+	  "password": "password1"
+    }
+    ```
+ 2 - Take the "Bearer Token" from headers
  
