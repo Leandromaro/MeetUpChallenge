@@ -59,7 +59,7 @@ public class MeetUpController {
             @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
     })
     @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<MeetUpResponse> enrollUserToMeetUp(
+    public ResponseEntity enrollUserToMeetUp(
             @PathVariable long meetUpId,
             @PathVariable long userId) {
         meetUpService.enrollUserToMeetUp(meetUpId,userId);
@@ -74,7 +74,7 @@ public class MeetUpController {
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_FORBIDDEN, message = "Forbidden Access")
     })
-    public ResponseEntity<MeetUpResponse> checkInUserToMeetUp(
+    public ResponseEntity checkInUserToMeetUp(
             @PathVariable long meetUpId,
             @PathVariable long userId) {
         meetUpService.checkInUserToMeetUp(meetUpId,userId);
