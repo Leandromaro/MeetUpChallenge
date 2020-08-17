@@ -9,6 +9,7 @@ import com.leandromaro.santander.rest.service.WeatherService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -110,7 +111,7 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @GetMapping
-    @ApiOperation(value = "Get all the registered MeetUps")
+    @ApiOperation(value = "Get all the registered MeetUps", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
