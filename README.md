@@ -7,6 +7,17 @@ The challenge was created using the following tools.
 
   - Java 8
   - Spring Boot
+  - Gradle
   - Spring Security
   - Swagger
   - H2 database
+
+### Installation
+
+Follow the next steps to use
+
+```sh
+$ git clone
+$ cd santanderCallenger
+$ ./gradlew build
+```
