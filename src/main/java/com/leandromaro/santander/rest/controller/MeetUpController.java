@@ -34,7 +34,7 @@ public class MeetUpController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @ApiOperation(value = "Creates MeetUps")
+    @ApiOperation(value = "Creates MeetUps", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_CREATED, message = "created"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
@@ -52,7 +52,7 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/{meetUpId}/users/{userId}")
-    @ApiOperation(value = "Enroll User To MeetUp")
+    @ApiOperation(value = "Enroll User To MeetUp", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_CREATED, message = "created"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
@@ -68,7 +68,7 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @PatchMapping("/{meetUpId}/users/{userId}/checkIn")
-    @ApiOperation(value = "Check in User To MeetUp")
+    @ApiOperation(value = "Check in User To MeetUp", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
@@ -83,7 +83,7 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @GetMapping("/{meetUpId}/weather")
-    @ApiOperation(value = "Get MeetUp Weather")
+    @ApiOperation(value = "Get MeetUp Weather", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
@@ -97,7 +97,7 @@ public class MeetUpController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{meetUpId}/beerQuantity")
-    @ApiOperation(value = "Get number of beer to buy")
+    @ApiOperation(value = "Get number of beer to buy", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_OK, message = "ok"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),

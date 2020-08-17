@@ -6,6 +6,7 @@ import com.leandromaro.santander.rest.service.UserMeetUpService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +32,7 @@ public class UserMeetUpController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    @ApiOperation(value = "Create new MeetUp User")
+    @ApiOperation(value = "Create new MeetUp User", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_CREATED, message = "created"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),

@@ -5,6 +5,7 @@ import com.leandromaro.santander.rest.service.NotificationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +27,7 @@ public class NotificationController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @PostMapping("/meetUps/{meetUpId}")
-    @ApiOperation(value = "Notify all Users into a MeetUp")
+    @ApiOperation(value = "Notify all Users into a MeetUp", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_ACCEPTED, message = "accepted"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
@@ -41,7 +42,7 @@ public class NotificationController {
 
     @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
     @PostMapping("/meetUps/{meetUpId}/users/{userId}")
-    @ApiOperation(value = "Notify a single Users into a MeetUp")
+    @ApiOperation(value = "Notify a single Users into a MeetUp", authorizations = { @Authorization(value="jwtToken")})
     @ApiResponses(value = { @ApiResponse(code = SC_ACCEPTED, message = "accepted"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred"),
             @ApiResponse(code = SC_INTERNAL_SERVER_ERROR, message = "An unexpected error occurred"),
