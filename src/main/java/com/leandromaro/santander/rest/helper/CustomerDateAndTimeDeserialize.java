@@ -1,7 +1,6 @@
 package com.leandromaro.santander.rest.helper;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.sun.media.sound.InvalidDataException;
