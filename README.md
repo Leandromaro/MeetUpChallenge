@@ -1,4 +1,4 @@
-## Santander Tecnologia Challenge
+# Santander Tecnologia Challenge
 
 [![N|Solid](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTgTf4R8_Un5bL4JFXVo1sakNGPJPsrU7xL2sdsLqIYtw&usqp=CAU&ec=45690268)]()
 
@@ -12,7 +12,7 @@ The challenge was created using the following tools.
   - Swagger
   - H2 database
 
-### Installation
+## Installation
 
 Follow the next steps to use
 
@@ -26,7 +26,7 @@ $ ./gradlew build
  - Default port 8080.
 
 
-### Authentication
+## Authentication
 
 The app by deafult counts with two users:
  - User 1 (Admin)
@@ -49,10 +49,10 @@ The app by deafult counts with two users:
  2 - Take the "Bearer Token" from headers
 
 
-### Swagger
+## Swagger
 [![N|Solid](https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTwdFKqBMgBqxCu2kPtfWAPyWtU4OObc_igMQ&usqp=CAU)](http://localhost:8080/swagger-ui.html)
 
-### Using
+## Using
  - Use swagger UI + Bearer Token
    [![N|Solid](https://miro.medium.com/max/672/1*wZZzz51HAzoA1cUQrlkC_w.png)]()
     -  Value: Beares + JwtToken
