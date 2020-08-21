@@ -20,7 +20,7 @@ Follow the next steps to use
 $ git clone
 $ cd santanderCallenger
 $ ./gradlew build
-./gradlew bootRun
+$ ./gradlew bootRun
 ```
 
  - Default port 8080.
@@ -58,7 +58,7 @@ The app by deafult counts with two users:
  
  
    [![N|Solid](https://miro.medium.com/max/672/1*wZZzz51HAzoA1cUQrlkC_w.png)]()
-    -  Value: Beares + JwtToken
+    -  Value: Bearer + JwtToken
  - Use postman collection (Santander.postman_collection.json) placed in resources
 
 ### Enjoy :)
