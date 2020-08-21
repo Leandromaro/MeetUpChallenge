@@ -18,7 +18,7 @@ Follow the next steps to use
 
 ```sh
 $ git clone
-$ cd santanderCallenger
+$ cd santanderChallenge
 $ ./gradlew build
 $ ./gradlew bootRun
 ```
